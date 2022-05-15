@@ -1,12 +1,13 @@
 import os
-from flask import Flask, render_template, request, url_for, flash, redirect
-
+from flask import (
+    Flask, flash, render_template,
+    redirect, request, session, url_for)
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '89cdd3188c77fbad4575532e4ddb904563d714ab924ea075y'
 app.config['SESSION_TYPE'] = 'filesystem'
 app.secret_key = '89cdd3188c77fbad4575532e4ddb904563d714ab924ea075y'
-
 
 messages = [{'title': 'Message One',
              'description': 'Message One Content'},
@@ -35,6 +36,7 @@ def contact():
 @app.route("/favorites")
 def favorites():
     return render_template("favorites.html")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -70,13 +72,14 @@ def login():
 
         if existing_user:
             # ensure hashed password matches user input
-            if check_password_hash(
-                    existing_user["password"], request.form.get("password")):
-                        session["user"] = request.form.get("username").lower()
-                        flash("Welcome, {}".format(
-                            request.form.get("username")))
-                        return redirect(url_for(
-                            "profile", username=session["user"]))
+            if check_password_hash(existing_user["password"], 
+                request.form.get("password")):
+                session["user"] = request.form.get(
+                    "username").lower()
+                flash("Welcome, {}".format(
+                    request.form.get("username")))
+                return redirect(url_for(
+                    "profile", username=session["user"]))
             else:
                 # invalid password match
                 flash("Incorrect Username and/or Password")
@@ -90,14 +93,13 @@ def login():
     return render_template("login.html")
 
 
-
-
 @app.route("/logout")
 def logout():
     # remove user from session cookie
     flash("You have been logged out")
     session.pop("user")
     return redirect(url_for("login"))
+
 
 @app.route('/add_recipe', methods=('GET', 'POST'))
 def add_recipe():
@@ -113,6 +115,7 @@ def add_recipe():
             messages.append({'title': title, 'description': description})
 
     return render_template('add_recipe.html')
+
 
 if __name__ == "__main__":
     app.run(
