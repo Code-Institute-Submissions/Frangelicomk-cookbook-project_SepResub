@@ -2,22 +2,25 @@ import os
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
+from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '89cdd3188c77fbad4575532e4ddb904563d714ab924ea075y'
-app.config['SESSION_TYPE'] = 'filesystem'
-app.secret_key = '89cdd3188c77fbad4575532e4ddb904563d714ab924ea075y'
+
+app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
+app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+app.secret_key = 'PUsG,-0id*1DKs(LXS}yp8PVTf`jzc'
+
+mongo = PyMongo(app)
 
 messages = [{'title': 'Message One',
              'description': 'Message One Content'},
             {'title': 'Message Two',
              'description': 'Message Two Content'}
             ]
-
-app = Flask(__name__)
 
 
 @app.route("/")
@@ -37,7 +40,7 @@ def contact():
 
 @app.route("/favorites")
 def favorites():
-    return render_template("favorites.html")
+    return render_template("favorites.html", page_title="Favourite")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -51,11 +54,12 @@ def register():
             flash("Username already exists")
             return redirect(url_for("register"))
 
-        register = {
-            "username": request.form.get("username").lower(),
-            "password": generate_password_hash(request.form.get("password"))
-        }
-        mongo.db.users.insert_one(register)
+            register = {
+                "username": request.form.get("username").lower(),
+                "password": generate_password_hash(
+                    request.form.get("password"))
+            }
+            mongo.db.users.insert_one(register)
 
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
@@ -75,9 +79,9 @@ def login():
 
         if existing_user:
             # ensure hashed password matches user input
-            if check_password_hash(existing_user["password"], request.form.get("password")):
-                session["user"] = request.form.get(
-                    "username").lower()
+            if check_password_hash(
+                existing_user["password"], request.form.get("password")):
+                session["user"] = request.form.get("username").lower()
                 flash("Welcome, {}".format(
                     request.form.get("username")))
                 return redirect(url_for(
