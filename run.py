@@ -110,7 +110,6 @@ def logout():
 
 
 @app.route('/add_recipe', methods=('GET', 'POST'))
-@requires_auth()
 def add_recipe():
     """User will be able to add a new recipe"""
     if request.method == 'POST':
