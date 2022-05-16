@@ -25,7 +25,8 @@ messages = [{'title': 'Message One',
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    recipes = mongo.db.recipes.find()
+    return render_template("index.html", recipes=recipes)
 
 
 @app.route("/about")
@@ -52,7 +53,6 @@ def register():
 
         if existing_user:
             flash("Username already exists")
-            return redirect(url_for("register"))
 
             register = {
                 "username": request.form.get("username").lower(),
@@ -60,6 +60,8 @@ def register():
                     request.form.get("password"))
             }
             mongo.db.users.insert_one(register)
+
+            return redirect(url_for("register"))
 
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
@@ -108,6 +110,7 @@ def logout():
 
 
 @app.route('/add_recipe', methods=('GET', 'POST'))
+@requires_auth()
 def add_recipe():
     """User will be able to add a new recipe"""
     if request.method == 'POST':
