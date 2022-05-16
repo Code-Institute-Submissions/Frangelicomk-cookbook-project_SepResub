@@ -154,7 +154,7 @@ def add_recipe():
                 messages.append(document)
                 mongo.db.recipes.insert_one(document)
 
-        return render_template('add_recipe.html')
+        return render_template('add_recipe.html', username=session["user"])
     return render_template(
         "login.html")
 
