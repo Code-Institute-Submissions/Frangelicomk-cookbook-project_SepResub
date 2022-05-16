@@ -6,16 +6,24 @@
 
         <form method="POST" action="{{ url_for('add_recipe') }}">
             <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" class="form-control" id="title" name="title" value="{{ request.form['title'] }}" placeholder="Pasta with Salmon">
+              <label for="cousine_name">Cousine Name</label>
+              <input type="text" class="form-control" id="cousine_name" name="cousine_name" value="{{ request.form['cousine_name'] }}" placeholder="Pasta with Salmon">
             </div>
             <div class="form-group">
-              <label for="exampleFormControlTextarea1">Example textarea</label>
-              <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3">{{ request.form['description'] }}</textarea>
+              <label for="recipe_name">Recipe Name</label>
+              <input type="text" class="form-control" id="recipe_name" name="recipe_name" value="{{ request.form['recipe_name'] }}" placeholder="Pasta with Salmon">
             </div>
             <div class="form-group">
-                <label class="form-label" for="ImageUpload">Upload Cover</label>
-                <input type="file" class="form-control" id="ImageUpload" />
+              <label for="description">Description</label>
+              <textarea class="form-control" name="description" id="description" rows="3">{{ request.form['description'] }}</textarea>
+            </div>
+            <div class="form-group">
+              <label for="ingredients">Ingredients</label>
+              <textarea class="form-control" name="ingredients" id="ingredients" rows="3">{{ request.form['ingredients'] }}</textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="cover">Upload Cover</label>
+                <input type="file" class="form-control" id="cover" name="cover" accept="image/*">
             </div>
             <input type="submit" value="Submit">
         </form>

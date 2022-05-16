@@ -113,15 +113,24 @@ def logout():
 def add_recipe():
     """User will be able to add a new recipe"""
     if request.method == 'POST':
-        title = request.form['title']
-        description = request.form['description']
+        cousine_name = request.form.get('cousine_name')
+        recipe_name = request.form.get('recipe_name')
+        description = request.form.get('description')
+        ingredients = request.form.get('ingredients')
+        cover = request.form.get('cover')
 
-        if not title:
-            flash('Title is required!')
+        if not cousine_name:
+            flash('Cousine Name is required!')
+        elif not recipe_name:
+            flash('Recipe Name is required!')
         elif not description:
-            flash('Content is required!')
+            flash('Description is required!')
+        elif not ingredients:
+            flash('Ingredients is required!')
+        elif not cover:
+            flash('Cover is required!')
         else:
-            messages.append({'title': title, 'description': description})
+            messages.append({'cousine_name': cousine_name, 'recipe_name': recipe_name, 'description': description, 'cover': cover, 'ingredients': ingredients})
 
     return render_template('add_recipe.html')
 
