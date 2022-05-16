@@ -3,6 +3,8 @@ from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
 from werkzeug.security import generate_password_hash, check_password_hash
+if os.path.exists("env.py"):
+    import env
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '89cdd3188c77fbad4575532e4ddb904563d714ab924ea075y'
@@ -72,8 +74,8 @@ def login():
 
         if existing_user:
             # ensure hashed password matches user input
-            if check_password_hash(existing_user["password"], 
-                request.form.get("password")):
+            if check_password_hash(existing_user["password"],
+            request.form.get("password")):
                 session["user"] = request.form.get(
                     "username").lower()
                 flash("Welcome, {}".format(
@@ -95,7 +97,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    # remove user from session cookie
+    """remove user from session cookie"""
     flash("You have been logged out")
     session.pop("user")
     return redirect(url_for("login"))
@@ -103,6 +105,7 @@ def logout():
 
 @app.route('/add_recipe', methods=('GET', 'POST'))
 def add_recipe():
+    """User will be able to add a new recipe"""
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
@@ -119,6 +122,6 @@ def add_recipe():
 
 if __name__ == "__main__":
     app.run(
-        host=os.environ.get("IP", "0.0.0.0"),
+        host=os.environ.get("IP"),
         port=int(os.environ.get("PORT", "5000")),
         debug=True)
