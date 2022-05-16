@@ -130,7 +130,11 @@ def add_recipe():
         elif not cover:
             flash('Cover is required!')
         else:
-            messages.append({'cousine_name': cousine_name, 'recipe_name': recipe_name, 'description': description, 'cover': cover, 'ingredients': ingredients})
+            document = {'cousine_name': cousine_name,
+             'recipe_name': recipe_name, 'description': description, 
+             'cover': cover, 'ingredients': ingredients}
+            messages.append(document)
+            mongo.db.recipes.insert_one(document)
 
     return render_template('add_recipe.html')
 
