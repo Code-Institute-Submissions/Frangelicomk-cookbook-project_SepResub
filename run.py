@@ -124,18 +124,14 @@ def logout():
 
 @app.route('/add_recipe', methods=('GET', 'POST'))
 def add_recipe():
-    if(session.get("user")):
         """User will be able to add a new recipe"""
+    if(session.get("user")):
         if request.method == 'POST':
             cousine_name = request.form.get('cousine_name')
             recipe_name = request.form.get('recipe_name')
             description = request.form.get('description')
             ingredients = request.form.get('ingredients')
             cover = request.form.get("cover")
-
-            # latestfile = request.files['cover']
-            # full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
-            # latestfile.save(full_filename)
 
             if not cousine_name:
                 flash('Cousine Name is required!')
