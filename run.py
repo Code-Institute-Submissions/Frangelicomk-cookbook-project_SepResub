@@ -10,8 +10,12 @@ if os.path.exists("env.py"):
 
 app = Flask(__name__)
 
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(APP_ROOT, 'static', 'assets')
+
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'PUsG,-0id*1DKs(LXS}yp8PVTf`jzc'
 
 mongo = PyMongo(app)
@@ -53,20 +57,19 @@ def register():
 
         if existing_user:
             flash("Username already exists")
-
-            register = {
-                "username": request.form.get("username").lower(),
-                "password": generate_password_hash(
-                    request.form.get("password"))
-            }
-            mongo.db.users.insert_one(register)
-
             return redirect(url_for("register"))
+            
+        register = {
+            "username": request.form.get("username").lower(),
+            "password": generate_password_hash(
+                request.form.get("password"))
+        }
+        mongo.db.users.insert_one(register)
 
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
         flash("Registration Successful!")
-        return redirect(url_for("profile", username=session["user"]))
+        return redirect(url_for("register", username=session["user"]))
 
     return render_template("register.html")
 
@@ -117,7 +120,11 @@ def add_recipe():
         recipe_name = request.form.get('recipe_name')
         description = request.form.get('description')
         ingredients = request.form.get('ingredients')
-        cover = request.form.get('cover')
+        cover = request.form.get("cover")
+
+        # latestfile = request.files['cover']
+        # full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
+        # latestfile.save(full_filename)
 
         if not cousine_name:
             flash('Cousine Name is required!')
@@ -131,7 +138,7 @@ def add_recipe():
             flash('Cover is required!')
         else:
             document = {'cousine_name': cousine_name,
-             'recipe_name': recipe_name, 'description': description, 
+             'recipe_name': recipe_name, 'description': description,
              'cover': cover, 'ingredients': ingredients}
             messages.append(document)
             mongo.db.recipes.insert_one(document)
