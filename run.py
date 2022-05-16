@@ -67,6 +67,7 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    """Checks if the user is registered"""
     if request.method == "POST":
         # check if username exists in db
         existing_user = mongo.db.users.find_one(
@@ -74,8 +75,7 @@ def login():
 
         if existing_user:
             # ensure hashed password matches user input
-            if check_password_hash(existing_user["password"],
-            request.form.get("password")):
+            if check_password_hash(existing_user["password"], request.form.get("password")):
                 session["user"] = request.form.get(
                     "username").lower()
                 flash("Welcome, {}".format(
