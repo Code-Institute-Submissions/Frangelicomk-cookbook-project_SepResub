@@ -47,108 +47,116 @@ def contact():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method == "POST":
-        # check if username already exists in db
-        existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
+    if(not session.get("user")):
+        if request.method == "POST":
+            # check if username already exists in db
+            existing_user = mongo.db.users.find_one(
+                {"username": request.form.get("username").lower()})
 
-        if existing_user:
-            flash("Username already exists")
-            return redirect(url_for("register"))
-            
-        register = {
-            "username": request.form.get("username").lower(),
-            "password": generate_password_hash(
-                request.form.get("password"))
-        }
-        mongo.db.users.insert_one(register)
+            if existing_user:
+                flash("Username already exists")
+                return redirect(url_for("register"))
+                
+            register = {
+                "username": request.form.get("username").lower(),
+                "password": generate_password_hash(
+                    request.form.get("password"))
+            }
+            mongo.db.users.insert_one(register)
 
-        # put the new user into 'session' cookie
-        session["user"] = request.form.get("username").lower()
-        flash("Registration Successful!")
-        return redirect(url_for("favorites", username=session["user"]))
+            # put the new user into 'session' cookie
+            session["user"] = request.form.get("username").lower()
+            flash("Registration Successful!")
+            return redirect(url_for("favorites", username=session["user"]))
 
-    return render_template("register.html")
+        return render_template("register.html")
+    return redirect(url_for("index"))
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    """Checks if the user is registered"""
-    if request.method == "POST":
-        # check if username exists in db
-        existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
+    if(not session.get("user")):
+        """Checks if the user is registered"""
+        if request.method == "POST":
+            # check if username exists in db
+            existing_user = mongo.db.users.find_one(
+                {"username": request.form.get("username").lower()})
 
-        if existing_user:
-            # ensure hashed password matches user input
-            if check_password_hash(
-                    existing_user["password"], request.form.get("password")):
-                session["user"] = request.form.get("username").lower()
-                flash("Welcome, {}".format(request.form.get("username")))
-                return redirect(url_for(
-                    "favorites", username=session["user"]))
+            if existing_user:
+                # ensure hashed password matches user input
+                if check_password_hash(
+                        existing_user["password"], request.form.get("password")):
+                    session["user"] = request.form.get("username").lower()
+                    flash("Welcome, {}".format(request.form.get("username")))
+                    return redirect(url_for(
+                        "favorites", username=session["user"]))
+                else:
+                    # invalid password match
+                    flash("Incorrect Username and/or Password")
+                    return redirect(url_for("login"))
+
             else:
-                # invalid password match
+                # username doesn't exist
                 flash("Incorrect Username and/or Password")
                 return redirect(url_for("login"))
+        return render_template("login.html")
+    return redirect(url_for("index"))
 
-        else:
-            # username doesn't exist
-            flash("Incorrect Username and/or Password")
-            return redirect(url_for("login"))
-
-    return render_template("login.html")
 
 
 @app.route("/favorites<username>", methods=["GET", "POST"])
 def favorites(username):
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
+    if(session.get("user")):
+        username = mongo.db.users.find_one({"username": session["user"]})["username"]
+        return render_template("favorites.html", username=username)
     return render_template(
-        "favorites.html", username=username)
+        "login.html")
 
 
 @app.route("/logout")
 def logout():
-    """remove user from session cookie"""
-    flash("You have been logged out")
-    session.pop("user")
-    return redirect(url_for("login"))
+    if(session.get("user")):
+        """remove user from session cookie"""
+        flash("You have been logged out")
+        session.pop("user")
+        return redirect(url_for("login"))
 
 
 @app.route('/add_recipe', methods=('GET', 'POST'))
 def add_recipe():
-    """User will be able to add a new recipe"""
-    if request.method == 'POST':
-        cousine_name = request.form.get('cousine_name')
-        recipe_name = request.form.get('recipe_name')
-        description = request.form.get('description')
-        ingredients = request.form.get('ingredients')
-        cover = request.form.get("cover")
+    if(session.get("user")):
+        """User will be able to add a new recipe"""
+        if request.method == 'POST':
+            cousine_name = request.form.get('cousine_name')
+            recipe_name = request.form.get('recipe_name')
+            description = request.form.get('description')
+            ingredients = request.form.get('ingredients')
+            cover = request.form.get("cover")
 
-        # latestfile = request.files['cover']
-        # full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
-        # latestfile.save(full_filename)
+            # latestfile = request.files['cover']
+            # full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
+            # latestfile.save(full_filename)
 
-        if not cousine_name:
-            flash('Cousine Name is required!')
-        elif not recipe_name:
-            flash('Recipe Name is required!')
-        elif not description:
-            flash('Description is required!')
-        elif not ingredients:
-            flash('Ingredients is required!')
-        elif not cover:
-            flash('Cover is required!')
-        else:
-            document = {'cousine_name': cousine_name,
-             'recipe_name': recipe_name, 'description': description,
-             'cover': cover, 'ingredients': ingredients}
-            messages.append(document)
-            mongo.db.recipes.insert_one(document)
+            if not cousine_name:
+                flash('Cousine Name is required!')
+            elif not recipe_name:
+                flash('Recipe Name is required!')
+            elif not description:
+                flash('Description is required!')
+            elif not ingredients:
+                flash('Ingredients is required!')
+            elif not cover:
+                flash('Cover is required!')
+            else:
+                document = {'cousine_name': cousine_name,
+                'recipe_name': recipe_name, 'description': description,
+                'cover': cover, 'ingredients': ingredients}
+                messages.append(document)
+                mongo.db.recipes.insert_one(document)
 
-    return render_template('add_recipe.html')
-
+        return render_template('add_recipe.html')
+    return render_template(
+        "login.html")
 
 if __name__ == "__main__":
     app.run(
