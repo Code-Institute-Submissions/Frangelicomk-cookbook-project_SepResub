@@ -38,6 +38,18 @@ def index():
     return render_template("index.html", recipes=recipes)
 
 
+@app.route("/recipe/<recipe_name>")
+def recipe(recipe_name):
+    """
+    Formats index.html, take recipes from database and
+    puts them on index.html
+
+    """
+    recipe = mongo.db.recipes.find_one({"recipe_name": recipe_name})
+    print(recipe, recipe_name)
+    return render_template("recipe.html", recipe=recipe)
+
+
 @app.route("/about")
 def about():
     """
