@@ -3,21 +3,30 @@
 <!-- Header-->
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">The Recipe Book of Happiness</h1>
-            {% block subindex %}
-            {% if session.get("user") %}
-            <p class="lead fw-normal text-white-50 mb-0">{{ session["user"] }}, here you can view all the recipes</p>
-            {% else %}
-            <p class="lead fw-normal text-white-50 mb-0">Search Recipes Bellow</p>
-            {% endif %}
-            {% endblock subindex %}
-        </div>
-    </div>
-</header>
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">The Recipe Book of Happiness</h1>
+                    {% block subindex %}
+                    {% if session.get("user") %}
+                    <p class="lead fw-normal text-white-50 mb-0">{{ session["user"].capitalize() }}, here you can view all the recipes</p>
+                    {% else %}
+                    <p class="lead fw-normal text-white-50 mb-0">Search Recipes Bellow</p>
+                    {% endif %}
+                    {% endblock subindex %}
+                </div>
+            </header>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">    
+            <form action="POST" action="{{ url_for('search') }}">
+                <div class="input-group">
+                        <div class="form-outline">
+                        <input type="text" id="query" class="form-control" name="query" placeholder="Search by Recipe, cuisine" required/>
+                        </div>
+                        <button id="search-button" type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+            </form>
+        {% if recipes|length > 0 %}         
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
         {%for i in recipes%}
             <div class="col mb-5">
@@ -51,6 +60,9 @@
                 </div>
         {%endfor%}
         </div>
+        {% else %}
+            <h3>NO RESULTS</h3>
+        {% endif %}
     </div>
 </section>
 {% endblock %}

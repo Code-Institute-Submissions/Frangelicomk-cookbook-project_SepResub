@@ -7,7 +7,7 @@
             <h1 class="display-4 fw-bolder">The Recipe Book of Happiness</h1>
             {% block subs %}
             {% if session.get("user") %}
-            <p class="lead fw-normal text-white-50 mb-0">Welcome to your cookbook {{ username }} !!!</p>
+            <p class="lead fw-normal text-white-50 mb-0">Welcome to your cookbook {{ username.capitalize() }} !!!</p>
             {% else %}
             <p class="lead fw-normal text-white-50 mb-0">Search Recipes Bellow</p>
             {% endif %}
