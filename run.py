@@ -3,7 +3,7 @@ from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
-from bson.objectid import ObjectId
+# from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
@@ -27,27 +27,34 @@ messages = [{'title': 'Message One',
             ]
 
 
-@app.route("/")
+# @app.route("/")
 def index():
+    """
+    Formats index.html, take recipes from database and
+    puts them on index.html
+
+    """
     recipes = mongo.db.recipes.find()
     return render_template("index.html", recipes=recipes)
 
 
 @app.route("/about")
 def about():
+    """
+    Formats the structure of about.html
+
+    """
     return render_template("about.html", page_title="About")
-
-
-@app.route("/contact")
-def contact():
-    return render_template("contact.html", page_title="Contact")
-
-
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    if(not session.get("user")):
+    """
+    Registration auth, checks if user already exists in database.
+    This function was coppied from Code Institute Mini Project
+
+    """
+    if not session.get("user"):
         if request.method == "POST":
             # check if username already exists in db
             existing_user = mongo.db.users.find_one(
@@ -56,13 +63,11 @@ def register():
             if existing_user:
                 flash("Username already exists")
                 return redirect(url_for("register"))
-                
-            register = {
+            register_user = {
                 "username": request.form.get("username").lower(),
                 "password": generate_password_hash(
-                    request.form.get("password"))
-            }
-            mongo.db.users.insert_one(register)
+                    request.form.get("password"))}
+            mongo.db.users.insert_one(register_user)
 
             # put the new user into 'session' cookie
             session["user"] = request.form.get("username").lower()
@@ -75,8 +80,13 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if(not session.get("user")):
-        """Checks if the user is registered"""
+    """
+    This function check whether the user has logged in or if the username
+    and password are matching the database of a registered user
+    This function was coppied from Code Institute Mini Project
+
+    """
+    if not session.get("user"):
         if request.method == "POST":
             # check if username exists in db
             existing_user = mongo.db.users.find_one(
@@ -85,7 +95,8 @@ def login():
             if existing_user:
                 # ensure hashed password matches user input
                 if check_password_hash(
-                        existing_user["password"], request.form.get("password")):
+                        existing_user["password"],
+                        request.form.get("password")):
                     session["user"] = request.form.get("username").lower()
                     flash("Welcome, {}".format(request.form.get("username")))
                     return redirect(url_for(
@@ -103,11 +114,15 @@ def login():
     return redirect(url_for("index"))
 
 
-
 @app.route("/favorites<username>", methods=["GET", "POST"])
 def favorites(username):
-    if(session.get("user")):
-        username = mongo.db.users.find_one({"username": session["user"]})["username"]
+    """
+    Favorites html only appears if user is logged in
+
+    """
+    if session.get("user"):
+        username = mongo.db.users.find_one(
+            {"username": session["user"]})["username"]
         return render_template("favorites.html", username=username)
     return render_template(
         "login.html")
@@ -115,8 +130,11 @@ def favorites(username):
 
 @app.route("/logout")
 def logout():
-    if(session.get("user")):
-        """remove user from session cookie"""
+    """
+    Log out button only appears if user is logged in
+
+    """
+    if session.get("user"):
         flash("You have been logged out")
         session.pop("user")
         return redirect(url_for("login"))
@@ -124,8 +142,11 @@ def logout():
 
 @app.route('/add_recipe', methods=('GET', 'POST'))
 def add_recipe():
-        """User will be able to add a new recipe"""
-    if(session.get("user")):
+    """
+    add_recipe only appears if user is logged in
+
+    """
+    if session.get("user"):
         if request.method == 'POST':
             cousine_name = request.form.get('cousine_name')
             recipe_name = request.form.get('recipe_name')
@@ -144,15 +165,17 @@ def add_recipe():
             elif not cover:
                 flash('Cover is required!')
             else:
-                document = {'cousine_name': cousine_name,
-                'recipe_name': recipe_name, 'description': description,
-                'cover': cover, 'ingredients': ingredients}
+                document = {
+                    'cousine_name': cousine_name,
+                    'recipe_name': recipe_name, 'description': description,
+                    'cover': cover, 'ingredients': ingredients}
                 messages.append(document)
                 mongo.db.recipes.insert_one(document)
 
         return render_template('add_recipe.html', username=session["user"])
     return render_template(
         "login.html")
+
 
 if __name__ == "__main__":
     app.run(
