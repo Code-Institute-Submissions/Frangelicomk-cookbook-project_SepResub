@@ -3,7 +3,7 @@ from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
-# from bson.objectid import ObjectId
+from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
     import env
@@ -19,12 +19,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = 'PUsG,-0id*1DKs(LXS}yp8PVTf`jzc'
 
 mongo = PyMongo(app)
-
-messages = [{'title': 'Message One',
-             'description': 'Message One Content'},
-            {'title': 'Message Two',
-             'description': 'Message Two Content'}
-            ]
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -78,7 +72,7 @@ def login():
                         existing_user["password"],
                         request.form.get("password")):
                     session["user"] = request.form.get("username").lower()
-                    flash("Welcome, {}".format(request.form.get("username")))
+                    # flash("Welcome, {}".format(request.form.get("username")))
                     return redirect(url_for(
                         "favorites", username=session["user"]))
                 else:
@@ -94,16 +88,16 @@ def login():
     return redirect(url_for("index"))
 
 
-@app.route("/logout")
-def logout():
+@app.route("/search/", methods=["GET", "POST"])
+def search():
     """
-    Log out button only appears if user is logged in
+    Formats index.html, take recipes from database and
+    puts them on index.html
 
     """
-    if session.get("user"):
-        flash("You have been logged out")
-        session.pop("user")
-        return redirect(url_for("login"))
+    query = request.form.get('query')
+    recipes = list(mongo.db.recipes.find({"$text": {"$search": query}}))
+    return render_template("index.html", recipes=recipes)
 
 
 @app.route("/")
@@ -113,17 +107,19 @@ def index():
     puts them on index.html
 
     """
+
     recipes = mongo.db.recipes.find()
-    recipesModified = []
+    recipes_modified = []
     if session.get("user"):
-        for r in recipes:
-            favorites = mongo.db.user_favorites.find({"username": session["user"]})
-            r['isFavorite'] = False
-            for f in favorites:
-                if(r['recipe_name'] == f['recipe_name']):
-                    r['isFavorite'] = True
-            recipesModified.append(r)
-        return render_template("index.html", recipes=recipesModified)
+        for rec in recipes:
+            total_favorites = mongo.db.user_favorites.find(
+                {"username": session["user"]})
+            rec['isFavorite'] = False
+            for fav in total_favorites:
+                if rec['recipe_name'] == fav['recipe_name']:
+                    rec['isFavorite'] = True
+            recipes_modified.append(rec)
+        return render_template("index.html", recipes=recipes_modified)
     return render_template("index.html", recipes=recipes)
 
 
@@ -134,9 +130,8 @@ def recipe(recipe_name):
     puts them on index.html
 
     """
-    
-    recipe = mongo.db.recipes.find_one({"recipe_name": recipe_name})
-    return render_template("recipe.html", recipe=recipe)
+    recipe_info = mongo.db.recipes.find_one({"recipe_name": recipe_name})
+    return render_template("recipe.html", recipe=recipe_info)
 
 
 @app.route("/favorite_recipe/<recipe_name>")
@@ -146,17 +141,18 @@ def favorite_recipe(recipe_name):
     puts them on index.html
 
     """
-
-    favorites = []
-    checkIfFavorite = mongo.db.user_favorites.find({"recipe_name": recipe_name, "username": session["user"]})
-    for x in checkIfFavorite:
-        favorites.append(x)
+    favorite_recipes = []
+    check_if_editable = mongo.db.user_favorites.find(
+        {"recipe_name": recipe_name, "username": session["user"]})
+    for fav_rec in check_if_editable:
+        favorite_recipes.append(fav_rec)
     # if already favorited
-    if len(favorites) >= 1: 
-        mongo.db.user_favorites.delete_one({"recipe_name": recipe_name, "username": session["user"]})
+    if len(favorite_recipes) >= 1:
+        mongo.db.user_favorites.delete_one(
+            {"recipe_name": recipe_name, "username": session["user"]})
     else:
         mongo.db.user_favorites.insert_one({
-            "recipe_name": recipe_name, 
+            "recipe_name": recipe_name,
             "username": session["user"]})
     return redirect(url_for("index"))
 
@@ -172,16 +168,16 @@ def favorites(username):
             {"username": session["user"]})["username"]
 
         recipes = mongo.db.recipes.find()
-        recipesModified = []
+        recipes_modified = []
         if session.get("user"):
-            for r in recipes:
-                favorites = mongo.db.user_favorites.find({"username": session["user"]})
-                for f in favorites:
-                    print(r['recipe_name'] , f['recipe_name'])
-                    if(r['recipe_name'] == f['recipe_name']):
-                        recipesModified.append(r)
-        return render_template("favorites.html",
-            username=username, recipes=recipesModified)
+            for rec in recipes:
+                user_favorites = mongo.db.user_favorites.find(
+                    {"username": session["user"]})
+                for fav in user_favorites:
+                    if rec['recipe_name'] == fav['recipe_name']:
+                        recipes_modified.append(rec)
+        return render_template(
+            "favorites.html", username=username, recipes=recipes_modified)
     return render_template(
         "login.html")
 
@@ -207,7 +203,8 @@ def add_recipe():
             flash("Recipe Added")
             return redirect(url_for("index"))
     recipes = mongo.db.recipes.find().sort("recipe_name", 1)
-    return render_template("add_recipe.html", recipes=recipes, cuisines=cuisines)
+    return render_template(
+        "add_recipe.html", recipes=recipes, cuisines=cuisines)
 
 
 @app.route("/about")
@@ -217,6 +214,19 @@ def about():
 
     """
     return render_template("about.html", page_title="About")
+
+
+@app.route("/logout")
+def logout():
+    """
+    Log out button only appears if user is logged in
+
+    """
+    if session.get("user"):
+        flash("You have been logged out")
+        session.pop("user")
+        return redirect(url_for("login"))
+
 
 if __name__ == "__main__":
     app.run(
