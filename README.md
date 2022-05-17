@@ -1,108 +1,202 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+<h1 align="center">MK || CookBook</h1>
 
-Welcome Frangelicomk,
+[MK || Cookbook]( https://cookbook-mk-ms3-project.herokuapp.com/)
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+This is my 3rd Project for Code Institute, which futures python. Unfortunately I did not have the time to complete the website as I wanted I will
+write down what will the upcoming futures be
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
 
-## Gitpod Reminders
+## Table of contents
+1. [User Experience (UX)](#user-experience-ux)
+    + User Stories
+    + Design
+    + Wireframes
+2. [Features](#features) 
+    + Existing Features
+    + Upcoming Features
+3. [Technologies Used](#technologies-used)
+    + Languages Used
+    + Frameworks, Libraries & Progragms Used
+4. [Testing](#testing)
+5. [Deployment on Github](#deployment-on-github)
+6. [Deployment on Heroku](#deployment-on-heroku)
+7. [Credits](#credits)
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+## User Experience (UX)
 
-`python3 -m http.server`
++ ### User Stories
 
-A blue button should appear to click: _Make Public_,
+    + First Time Visitors
 
-Another blue button should appear to click: _Open Browser_.
+      For first time Visitors my aim is have the recipes shown in the main screen, and the about tab to be visible.
+      Also for the Login/Register Buttons to be available.
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+    + Returing Visitors
 
-A blue button should appear to click: _Make Public_,
+      Returning visitors should be able to quickly log in and taken straight to their favorite page and also to be able to add their own recipes.
++ ### Design
 
-Another blue button should appear to click: _Open Browser_.
+  + Colour Scheme
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+     + I picked a theme from Free Boostrap Themes as I didnt have the time on this project to create the site all by myself
+  
+  + Imagery 
+     
+     + The photos I used were links from other websites, I just used copy image address to test that the recipes have images. In the future I want to add jpeg/png images taken by me and also users
+     to be able to add their own jpeg images(this will be subject to review before posting)
 
-To log into the Heroku toolbelt CLI:
++ ### Wireframes
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+    + I didnt use wireframes for this project
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+## Features
 
-------
++ Responsive on all device sizes
++ Vanilla JavaScript
++ Interactive Elements 
++ Animation done in CSS3
++ A cook book work in progress.
 
-## Release History
+## Upcoming Features 
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
++ Users will be able to search recipes in their favorites tab and search bar will be animated
++ Users will be able to choose whether the recipe they add will be public or private
++ Template cards for recipes will be re-designed to be more interactive.
++ Will add CSS and JS into Add-recipe form which I didnt have the time to do now.
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+## Technologies Used 
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+### Languages Used
++ [HTML 5](https://en.wikipedia.org/wiki/HTML5)
++ [CSS3](https://en.wikipedia.org/wiki/CSS)
++ [JAVASCRIPT](https://en.wikipedia.org/wiki/JavaScript)
++ [PYTHON 3.X](https://en.wikipedia.org/wiki/Python_(programming_language))
++ [FLASK FRAMEWORK](https://en.wikipedia.org/wiki/Flask_(web_framework))
++ [MONGO DB](https://en.wikipedia.org/wiki/MongoDB)
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+### Frameworks, Libraries & Programs Used
+1. [Font Awesome](https://fontawesome.com)
+    + Font Awesome used for social Icons
+2. [Git](https://git-scm.com)
+    + Git was used for version control by utilizing the Gitpod terminal to commit to Git and Push to GitHub.
+3. [Github](https://github.com)
+    + GitHub is used to store the projects code after being pushed from Git.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+## Testing
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+JS Hint, The W3C Markup Validator and W3C CSS Validator Services were used to validate every page of <br>the project to ensure there were no syntax errors in the project. Color Contrast checker Coolors used to check the contrast and also pick the right colour palette for
+the website.
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
++ [JSHint](https://jshint.com/)
++ [W3C Markup Validator](https://validator.w3.org/#validate_by_uri+with_options)
++ [W3C CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_input)
++ [PEP8](http://pep8online.com/)
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+### Testing User Stories
++ I did not have the time for testing user stories. I run my own tests for this project :/
+  
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+### Further Testing
++ The Website was tested on Google Chrome, Internet Explorer, Microsoft Edge, Opera and Safari browsers.
++ The website was viewed on a variety of devices such as Desktop, Laptop, Samsung S22 Ultra and iPhoneX.
++ I personally have access in 27" 2K Monitor, a 17" Laptop, Android phone which I constatly used for testing.
++ I have used Chrome Developer Tools as Opera Dev Tools to constantly check the website responsivness.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+### Difficulties Encountered & Bugs
++ Known Bug: The user can add and remove from favorites on the recipe screen, while the user can see 
+the recipes favorited on the favorites tab when pressing view more and un-favorite button on that page the app crashes.
+I dont know how to fix this yet.
++ Known Bug: While I have added two fields for passwords when someone registers I couldnt make the validations for these 2 fields.
+so if the user adds a password and then adds different password on repeat-password field user will still be registered with the first entry.
+Also there is no message appearing yet when the username is taken. The page will be just refreshed.
++ Some URLs for images dont show as it should be. The plan in the future is to let the users add images, subject to review by admins.
++ I found it difficult creating some of the def in python and then make them work on each page. It was difficult to add blocks of code using flask.
+I believe this will come with practice.
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+## Deployment on Github 
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+### GitHub Pages
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+The project was deployed to GitHub Pages using the following steps...
 
-------
+1. Log in to GitHub and locate the [GitHub Repository](https://github.com/)
+2. At the top of the Repository (not top of page), locate the "Settings" Button on the menu.
+3. Scroll down the Settings page until you locate the "GitHub Pages" Section.
+4. Under "Source", click the dropdown called "None" and select "Master Branch".
+5. The page will automatically refresh.
+6. Scroll back down through the page to locate the now published site [link](https://github.com) in the "GitHub Pages" section.
 
-## FAQ about the uptime script
+### Forking the GitHub Repository
 
-**Why have you added this script?**
+By forking the GitHub Repository we make a copy of the original repository on our GitHub account to view and/or make changes without affecting the original repository by using the following steps...
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+1. Log in to GitHub and locate the [GitHub Repository](https://github.com/)
+2. At the top of the Repository (not top of page) just above the "Settings" Button on the menu, locate the "Fork" Button.
+3. You should now have a copy of the original repository in your GitHub account.
 
-**How will this affect me?**
+### Making a Local Clone
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+1. Log in to GitHub and locate the [GitHub Repository](https://github.com/)
+2. Under the repository name, click "Clone or download".
+3. To clone the repository using HTTPS, under "Clone with HTTPS", copy the link.
+4. Open Git Bash
+5. Change the current working directory to the location where you want the cloned directory to be made.
+6. Type `git clone`, and then paste the URL you copied in Step 3.
 
 ```
-pkill uptime.sh
-rm .vscode/uptime.sh
+$ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
 ```
 
-**Anything more?**
+7. Press Enter. Your local clone will be created.
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+```
+$ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
+> Cloning into `CI-Clone`...
+> remote: Counting objects: 10, done.
+> remote: Compressing objects: 100% (8/8), done.
+> remove: Total 10 (delta 1), reused 10 (delta 1)
+> Unpacking objects: 100% (10/10), done.
 
----
+```
+## Deployment on Heroku
 
-Happy coding!
+### Heroku
+
+The project was deployed to Heroku following the next steps:
+1. Create a requirements.txt file using the terminal command `pip freeze > requirements.txt`.
+2. Create a Procfile with the terminal command `echo web: python app.py > Procfile`.
+3. Proceed with git add and git commit the new requirements and Procfile and then git push the project to GitHub.
+4. Create a new app on [Heroku website](https://dashboard.heroku.com/) by clicking the "New" button on your dashboard. Give it a name and set the region to Europe.
+5. From the Heroku dashboard of your newly created application, click on "Deploy", "Deployment method" and "select Github".
+6. Confirm the linking of the Heroku app to the correct Github repository.
+7. In the Heroku dashboard for the application, click on "Settings" > "Reveal Config Vars".
+8. Set the following config vars:
+IP : 
+MONGO_URI : 
+PORT : 
+SECRET_KEY : 
+9. Click on enable deployment.
+10. Wait until you get notified a the bottom of the page that your app is deployed and vie the deployment.
+
+## Credits
+
+### Code
++ All code was written by Michael Kefalas
++ Authentication for users log in/register and log out was copied from Flask Mini Project from Code Institute videos.
+
+### Content 
++ All content was written by Developer and Designer Michael Kefalas
+
+### Acknowledgements 
++ Youtubers which i got inspired from :
+  + [Kevin Powell](https://www.kevinpowell.co) for his amazing videos regarding CSS and Grid , his approach on designs is something I want to learn and also I am having his
+  course as well for Flexbox
+  + [Gary Simon](https://dribbble.com/Coursetro) has been a great inspiration and you can follow his discord channel [here!](https://discord.gg/wQQtgNey)
++ [Mozila Developer](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) for the awesome explaination of the canvas future. Everything you need for Javascript can be found 
+  there as well.
++ [George Karabassis](https://www.fiverr.com/gorgeka111) a big thanks to the most amazing Tutor/Mentor out there for the Bootcamp he provided for 3 days in a row to help me further understand
+  Javascript
++ Also I have to thank [Nescafe](https://www.nescafe.com/gb/) which is my go to go Coffee helping me maintain my eyes open while coding late in the evening.This doesnt count as
+an ad right? And if i continue like this I will Acknowledge Specsavers as they will soon provide me with glasses :)
