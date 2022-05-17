@@ -12,6 +12,8 @@
             integrity="sha512-xA6Hp6oezhjd6LiLZynuukm80f8BoZ3OpcEYaqKoCV3HKQDrYjDE1Gu8ocxgxoXmwmSzM4iqPvCsOkQNiu41GA==" crossorigin="anonymous" type="text/css">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
             <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+            {% block styles %}
+            {% endblock %}
             <title>MK || Cookbook</title>
 </head>
 <body>
@@ -52,8 +54,22 @@
          </div>
      </div>
  </nav>
- {% block content %}
- {% endblock %}
+ <main>
+     
+     {% block content %}
+     {% endblock %}
+    </main>
+    <section class="container">
+       {% with messages = get_flashed_messages() %}
+           {% if messages %}
+               {% for message in messages %}
+                   <div class="text-center">
+                       <h3>{{ message }}</h3>
+                   </div>
+               {% endfor %}
+           {% endif %}
+       {% endwith %}
+    </section>
  <!-- Footer-->
  <footer class="py-5 bg-dark">
      <div class="container"><p class="m-0 text-center text-white">Copyright &copy; MK || Cookbook <span id="copyright"></span></p></div>
@@ -74,5 +90,7 @@
  <script>
  $("#copyright").text(new Date().getFullYear());
 </script>
+{% block scripts %}
+{% endblock %}
  </body>
 </html>
