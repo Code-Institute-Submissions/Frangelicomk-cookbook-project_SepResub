@@ -27,29 +27,27 @@
       <div class="tab-content">
         <div class="tab-pane fade show active" id="pills-login">
         <form method="POST">
-  
-    
-          <!-- Email input -->
+        <!-- Username input -->
           <div class="form-outline mb-4">
-            <input type="text" id="username" class="form-control" name="username" />
+            <input type="text" id="username" class="form-control" name="username" required/>
             <label class="form-label" for="username">Username</label>
           </div>
     
           <!-- Password input -->
           <div class="form-outline mb-4">
-            <input type="password" id="password" class="form-control" name="password" />
+            <input type="password" id="password" class="form-control" name="password" required/>
             <label class="form-label" for="password">Password</label>
           </div>
     
           <!-- Repeat Password input -->
           <div class="form-outline mb-4">
-            <input type="password" id="registerRepeatPassword" class="form-control" name="password_validation" />
+            <input type="password" id="registerRepeatPassword" class="form-control" name="password_validation" required/>
             <label class="form-label" for="registerRepeatPassword">Repeat password</label>
           </div>
   
     
           <!-- Submit button -->
-          <button type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
+          <button type="submit" class="btn btn-primary btn-block mb-3">Register</button>
           <!-- Register buttons -->
         <div class="text-center">
             <p>Are you a member? <a href="{{ url_for('login') }}">Login</a></p>
