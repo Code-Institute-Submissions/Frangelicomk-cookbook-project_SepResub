@@ -135,8 +135,7 @@ def recipe(recipe_name):
 
     """
     
-    mongo.db.recipes.find_one({"recipe_name": recipe_name})
-    print(recipe, recipe_name)
+    recipe = mongo.db.recipes.find_one({"recipe_name": recipe_name})
     return render_template("recipe.html", recipe=recipe)
 
 
@@ -162,16 +161,7 @@ def favorite_recipe(recipe_name):
     return redirect(url_for("index"))
 
 
-@app.route("/about")
-def about():
-    """
-    Formats the structure of about.html
-
-    """
-    return render_template("about.html", page_title="About")
-
-
-@app.route("/favorites<username>", methods=["GET", "POST"])
+@app.route("/favorites/<username>", methods=["GET", "POST"])
 def favorites(username):
     """
     Favorites html only appears if user is logged in
@@ -180,8 +170,16 @@ def favorites(username):
     if session.get("user"):
         username = mongo.db.users.find_one(
             {"username": session["user"]})["username"]
-        
-        return render_template("favorites.html", username=username)
+
+        recipes = mongo.db.recipes.find()
+        recipesModified = []
+        if session.get("user"):
+            favorites = mongo.db.user_favorites.find({"username": session["user"]})
+            for r in recipes:
+                for f in favorites:
+                    if(r['recipe_name'] == f['recipe_name']):
+                        recipesModified.append(r)
+        return render_template("favorites.html", username=username, recipes=recipesModified)
     return render_template(
         "login.html")
 
@@ -208,6 +206,14 @@ def add_recipe():
     recipes = mongo.db.recipes.find().sort("recipe_name", 1)
     return render_template("add_recipe.html", recipes=recipes)
 
+
+@app.route("/about")
+def about():
+    """
+    Formats the structure of about.html
+
+    """
+    return render_template("about.html", page_title="About")
 
 if __name__ == "__main__":
     app.run(

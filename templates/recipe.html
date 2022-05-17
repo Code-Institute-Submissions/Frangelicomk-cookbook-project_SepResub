@@ -1,5 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">The Recipe Book of Happiness</h1>
+            {% block subindex %}
+            {% if session.get("user") %}
+            <p class="lead fw-normal text-white-50 mb-0">{{ session["user"] }}, you are looking at {{ recipe.recipe_name }} recipe</p>
+            {% else %}
+            <p class="lead fw-normal text-white-50 mb-0"> {{ recipe.recipe_name }}</p>
+            {% endif %}
+            {% endblock subindex %}
+        </div>
+    </div>
+</header>
 <section class="py-5 h-100">
     <div class="container px-4 px-lg-5 mt-5 h-100">
         <nav aria-label="breadcrumb">
