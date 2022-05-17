@@ -198,7 +198,8 @@ def add_recipe():
                 "recipe_name": request.form.get('recipe_name'),
                 "description": request.form.get('description'),
                 "ingredients": request.form.get('ingredients'),
-                "cover": request.form.get("cover")
+                "cover": request.form.get("cover"),
+                "created_by": session["user"]
             }
             mongo.db.recipes.insert_one(newrecipe)
             flash("Recipe Added")
