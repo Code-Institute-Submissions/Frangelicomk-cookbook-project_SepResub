@@ -88,15 +88,16 @@ def login():
     return redirect(url_for("index"))
 
 
-@app.route("/search/", methods=["GET", "POST"])
-def search():
+@app.route("/search", methods=["GET", "POST"])
+def search_result():
     """
     Formats index.html, take recipes from database and
     puts them on index.html
 
     """
     query = request.form.get('query')
-    recipes = list(mongo.db.recipes.find({"$text": {"$search": query}}))
+    recipes = list(mongo.db.recipes.find({"$text": {
+        "$search": query}}))
     return render_template("index.html", recipes=recipes)
 
 
