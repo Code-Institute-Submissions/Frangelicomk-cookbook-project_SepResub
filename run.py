@@ -27,71 +27,6 @@ messages = [{'title': 'Message One',
             ]
 
 
-@app.route("/")
-def index():
-    """
-    Formats index.html, take recipes from database and
-    puts them on index.html
-
-    """
-    recipes = mongo.db.recipes.find()
-    recipesModified = []
-    if session.get("user"):
-        favorites = mongo.db.user_favorites.find({"username": session["user"]})
-        for r in recipes:
-            for f in favorites:
-                r['isFavorite'] = False
-                if(r['recipe_name'] == f['recipe_name']):
-                    r['isFavorite'] = True
-            recipesModified.append(r)
-        return render_template("index.html", recipes=recipesModified)
-    return render_template("index.html", recipes=recipes)
-
-
-@app.route("/recipe/<recipe_name>")
-def recipe(recipe_name):
-    """
-    Formats index.html, take recipes from database and
-    puts them on index.html
-
-    """
-    
-    mongo.db.recipes.find_one({"recipe_name": recipe_name})
-    print(recipe, recipe_name)
-    return render_template("recipe.html", recipe=recipe)
-
-
-@app.route("/favorite_recipe/<recipe_name>")
-def favorite_recipe(recipe_name):
-    """
-    Formats index.html, take recipes from database and
-    puts them on index.html
-
-    """
-
-    favorites = []
-    checkIfFavorite = mongo.db.user_favorites.find({"recipe_name": recipe_name, "username": session["user"]})
-    for x in checkIfFavorite:
-        favorites.append(x)
-    # if already favorited
-    if len(favorites) >= 1: 
-        mongo.db.user_favorites.delete_one({"recipe_name": recipe_name, "username": session["user"]})
-    else:
-        mongo.db.user_favorites.insert_one({
-            "recipe_name": recipe_name, 
-            "username": session["user"]})
-    return redirect(url_for("index"))
-
-
-@app.route("/about")
-def about():
-    """
-    Formats the structure of about.html
-
-    """
-    return render_template("about.html", page_title="About")
-
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """
@@ -159,20 +94,6 @@ def login():
     return redirect(url_for("index"))
 
 
-@app.route("/favorites<username>", methods=["GET", "POST"])
-def favorites(username):
-    """
-    Favorites html only appears if user is logged in
-
-    """
-    if session.get("user"):
-        username = mongo.db.users.find_one(
-            {"username": session["user"]})["username"]
-        return render_template("favorites.html", username=username)
-    return render_template(
-        "login.html")
-
-
 @app.route("/logout")
 def logout():
     """
@@ -183,6 +104,86 @@ def logout():
         flash("You have been logged out")
         session.pop("user")
         return redirect(url_for("login"))
+
+
+@app.route("/")
+def index():
+    """
+    Formats index.html, take recipes from database and
+    puts them on index.html
+
+    """
+    recipes = mongo.db.recipes.find()
+    recipesModified = []
+    if session.get("user"):
+        favorites = mongo.db.user_favorites.find({"username": session["user"]})
+        for r in recipes:
+            for f in favorites:
+                r['isFavorite'] = False
+                if(r['recipe_name'] == f['recipe_name']):
+                    r['isFavorite'] = True
+            recipesModified.append(r)
+        return render_template("index.html", recipes=recipesModified)
+    return render_template("index.html", recipes=recipes)
+
+
+@app.route("/recipe/<recipe_name>")
+def recipe(recipe_name):
+    """
+    Formats index.html, take recipes from database and
+    puts them on index.html
+
+    """
+    
+    mongo.db.recipes.find_one({"recipe_name": recipe_name})
+    print(recipe, recipe_name)
+    return render_template("recipe.html", recipe=recipe)
+
+
+@app.route("/favorite_recipe/<recipe_name>")
+def favorite_recipe(recipe_name):
+    """
+    Formats index.html, take recipes from database and
+    puts them on index.html
+
+    """
+
+    favorites = []
+    checkIfFavorite = mongo.db.user_favorites.find({"recipe_name": recipe_name, "username": session["user"]})
+    for x in checkIfFavorite:
+        favorites.append(x)
+    # if already favorited
+    if len(favorites) >= 1: 
+        mongo.db.user_favorites.delete_one({"recipe_name": recipe_name, "username": session["user"]})
+    else:
+        mongo.db.user_favorites.insert_one({
+            "recipe_name": recipe_name, 
+            "username": session["user"]})
+    return redirect(url_for("index"))
+
+
+@app.route("/about")
+def about():
+    """
+    Formats the structure of about.html
+
+    """
+    return render_template("about.html", page_title="About")
+
+
+@app.route("/favorites<username>", methods=["GET", "POST"])
+def favorites(username):
+    """
+    Favorites html only appears if user is logged in
+
+    """
+    if session.get("user"):
+        username = mongo.db.users.find_one(
+            {"username": session["user"]})["username"]
+        
+        return render_template("favorites.html", username=username)
+    return render_template(
+        "login.html")
 
 
 @app.route('/add_recipe', methods=('GET', 'POST'))
