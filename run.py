@@ -116,10 +116,10 @@ def index():
     recipes = mongo.db.recipes.find()
     recipesModified = []
     if session.get("user"):
-        favorites = mongo.db.user_favorites.find({"username": session["user"]})
         for r in recipes:
+            favorites = mongo.db.user_favorites.find({"username": session["user"]})
+            r['isFavorite'] = False
             for f in favorites:
-                r['isFavorite'] = False
                 if(r['recipe_name'] == f['recipe_name']):
                     r['isFavorite'] = True
             recipesModified.append(r)
@@ -174,12 +174,14 @@ def favorites(username):
         recipes = mongo.db.recipes.find()
         recipesModified = []
         if session.get("user"):
-            favorites = mongo.db.user_favorites.find({"username": session["user"]})
             for r in recipes:
+                favorites = mongo.db.user_favorites.find({"username": session["user"]})
                 for f in favorites:
+                    print(r['recipe_name'] , f['recipe_name'])
                     if(r['recipe_name'] == f['recipe_name']):
                         recipesModified.append(r)
-        return render_template("favorites.html", username=username, recipes=recipesModified)
+        return render_template("favorites.html",
+            username=username, recipes=recipesModified)
     return render_template(
         "login.html")
 
@@ -190,10 +192,11 @@ def add_recipe():
     add_recipe only appears if user is logged in
 
     """
+    cuisines = mongo.db.cuisine.find()
     if session.get("user"):
         if request.method == 'POST':
             newrecipe = {
-                "cousine_name": request.form.get('cousine_name'),
+                "cuisine_name": request.form.get('cuisine_name'),
                 "recipe_name": request.form.get('recipe_name'),
                 "description": request.form.get('description'),
                 "ingredients": request.form.get('ingredients'),
@@ -204,7 +207,7 @@ def add_recipe():
             flash("Recipe Added")
             return redirect(url_for("index"))
     recipes = mongo.db.recipes.find().sort("recipe_name", 1)
-    return render_template("add_recipe.html", recipes=recipes)
+    return render_template("add_recipe.html", recipes=recipes, cuisines=cuisines)
 
 
 @app.route("/about")
