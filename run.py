@@ -27,7 +27,7 @@ messages = [{'title': 'Message One',
             ]
 
 
-# @app.route("/")
+@app.route("/")
 def index():
     """
     Formats index.html, take recipes from database and
