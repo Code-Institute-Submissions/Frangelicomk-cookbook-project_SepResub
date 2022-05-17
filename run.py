@@ -35,6 +35,16 @@ def index():
 
     """
     recipes = mongo.db.recipes.find()
+    recipesModified = []
+    if session.get("user"):
+        favorites = mongo.db.user_favorites.find({"username": session["user"]})
+        for r in recipes:
+            for f in favorites:
+                r['isFavorite'] = False
+                if(r['recipe_name'] == f['recipe_name']):
+                    r['isFavorite'] = True
+            recipesModified.append(r)
+        return render_template("index.html", recipes=recipesModified)
     return render_template("index.html", recipes=recipes)
 
 
@@ -45,7 +55,8 @@ def recipe(recipe_name):
     puts them on index.html
 
     """
-    recipe = mongo.db.recipes.find_one({"recipe_name": recipe_name})
+    
+    mongo.db.recipes.find_one({"recipe_name": recipe_name})
     print(recipe, recipe_name)
     return render_template("recipe.html", recipe=recipe)
 
@@ -57,18 +68,18 @@ def favorite_recipe(recipe_name):
     puts them on index.html
 
     """
-    recipe = mongo.db.user_favorites.insert_one({"recipe_name": recipe_name, "username": session["user"]})
-    return redirect(url_for("index"))
 
-
-@app.route("/unfavorite_recipe/<recipe_name>")
-def unfavorite_recipe(recipe_name):
-    """
-    Formats index.html, take recipes from database and
-    puts them on index.html
-
-    """
-    recipe = mongo.db.user_favorites.delete_one({"recipe_name": recipe_name, "username": session["user"]})
+    favorites = []
+    checkIfFavorite = mongo.db.user_favorites.find({"recipe_name": recipe_name, "username": session["user"]})
+    for x in checkIfFavorite:
+        favorites.append(x)
+    # if already favorited
+    if len(favorites) >= 1: 
+        mongo.db.user_favorites.delete_one({"recipe_name": recipe_name, "username": session["user"]})
+    else:
+        mongo.db.user_favorites.insert_one({
+            "recipe_name": recipe_name, 
+            "username": session["user"]})
     return redirect(url_for("index"))
 
 
@@ -182,33 +193,18 @@ def add_recipe():
     """
     if session.get("user"):
         if request.method == 'POST':
-            cousine_name = request.form.get('cousine_name')
-            recipe_name = request.form.get('recipe_name')
-            description = request.form.get('description')
-            ingredients = request.form.get('ingredients')
-            cover = request.form.get("cover")
-
-            if not cousine_name:
-                flash('Cousine Name is required!')
-            elif not recipe_name:
-                flash('Recipe Name is required!')
-            elif not description:
-                flash('Description is required!')
-            elif not ingredients:
-                flash('Ingredients is required!')
-            elif not cover:
-                flash('Cover is required!')
-            else:
-                document = {
-                    'cousine_name': cousine_name,
-                    'recipe_name': recipe_name, 'description': description,
-                    'cover': cover, 'ingredients': ingredients}
-                messages.append(document)
-                mongo.db.recipes.insert_one(document)
-
-        return render_template('add_recipe.html', username=session["user"])
-    return render_template(
-        "login.html")
+            newrecipe = {
+                "cousine_name": request.form.get('cousine_name'),
+                "recipe_name": request.form.get('recipe_name'),
+                "description": request.form.get('description'),
+                "ingredients": request.form.get('ingredients'),
+                "cover": request.form.get("cover")
+            }
+            mongo.db.recipes.insert_one(newrecipe)
+            flash("Recipe Added")
+            return redirect(url_for("index"))
+    recipes = mongo.db.recipes.find().sort("recipe_name", 1)
+    return render_template("add_recipe.html", recipes=recipes)
 
 
 if __name__ == "__main__":
