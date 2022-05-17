@@ -19,12 +19,10 @@
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            {% block add_favorite %}
                                 {% if session.get("user") %}
-                                    <div class="text-center"><a class="btn"><i class="fa-regular fa-heart"></i></a></div>
+                                    <div class="text-center"><a class="btn" href="favorite_recipe/{{ i.recipe_name }}"><i class="fa-regular fa-heart"></i></a></div>
                                 {% endif %}
-                            {% endblock add_favorite %}
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="recipe/{{ i.recipe_name }}">View More</a></div>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="unfavorite_recipe/{{ i.recipe_name }}">View More</a></div>
                         </div>
                     </div>
                 </div>

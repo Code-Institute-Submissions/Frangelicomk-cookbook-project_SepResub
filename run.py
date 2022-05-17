@@ -50,6 +50,28 @@ def recipe(recipe_name):
     return render_template("recipe.html", recipe=recipe)
 
 
+@app.route("/favorite_recipe/<recipe_name>")
+def favorite_recipe(recipe_name):
+    """
+    Formats index.html, take recipes from database and
+    puts them on index.html
+
+    """
+    recipe = mongo.db.user_favorites.insert_one({"recipe_name": recipe_name, "username": session["user"]})
+    return redirect(url_for("index"))
+
+
+@app.route("/unfavorite_recipe/<recipe_name>")
+def unfavorite_recipe(recipe_name):
+    """
+    Formats index.html, take recipes from database and
+    puts them on index.html
+
+    """
+    recipe = mongo.db.user_favorites.delete_one({"recipe_name": recipe_name, "username": session["user"]})
+    return redirect(url_for("index"))
+
+
 @app.route("/about")
 def about():
     """
