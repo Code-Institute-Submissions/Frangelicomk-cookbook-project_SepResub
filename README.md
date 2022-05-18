@@ -34,15 +34,17 @@ write down what will the upcoming futures be
     + Returing Visitors
 
       Returning visitors should be able to quickly log in and taken straight to their favorite page and also to be able to add their own recipes.
+      In the future I want to user to be able to re-edit their own recipes and update them as required.
 + ### Design
 
   + Colour Scheme
 
-     + I picked a theme from Free Boostrap Themes as I didnt have the time on this project to create the site all by myself
+     + I picked a theme from [Free Boostrap Themes](https://startbootstrap.com/) as I didnt have the time on this project to create the site all by myself
   
   + Imagery 
      
-     + The photos I used were links from other websites, I just used copy image address to test that the recipes have images. In the future I want to add jpeg/png images taken by me and also users
+     + The photos I used were links from [Fine Dining Lovers](https://www.finedininglovers.com/), I just used copy image address to test that the recipes have images. 
+     In the future I want to add jpeg/png images taken by me and also users
      to be able to add their own jpeg images(this will be subject to review before posting)
 
 + ### Wireframes
@@ -60,6 +62,7 @@ write down what will the upcoming futures be
 ## Upcoming Features 
 
 + Users will be able to search recipes in their favorites tab and search bar will be animated
++ Autocomplete and search accuracy will be improved
 + Users will be able to choose whether the recipe they add will be public or private
 + Template cards for recipes will be re-designed to be more interactive.
 + Will add CSS and JS into Add-recipe form which I didnt have the time to do now.
@@ -71,8 +74,6 @@ write down what will the upcoming futures be
 + [CSS3](https://en.wikipedia.org/wiki/CSS)
 + [JAVASCRIPT](https://en.wikipedia.org/wiki/JavaScript)
 + [PYTHON 3.X](https://en.wikipedia.org/wiki/Python_(programming_language))
-+ [FLASK FRAMEWORK](https://en.wikipedia.org/wiki/Flask_(web_framework))
-+ [MONGO DB](https://en.wikipedia.org/wiki/MongoDB)
 
 ### Frameworks, Libraries & Programs Used
 1. [Font Awesome](https://fontawesome.com)
@@ -81,11 +82,10 @@ write down what will the upcoming futures be
     + Git was used for version control by utilizing the Gitpod terminal to commit to Git and Push to GitHub.
 3. [Github](https://github.com)
     + GitHub is used to store the projects code after being pushed from Git.
+4. [FLASK FRAMEWORK](https://en.wikipedia.org/wiki/Flask_(web_framework))
+5. [MONGO DB](https://en.wikipedia.org/wiki/MongoDB)
 
 ## Testing
-
-JS Hint, The W3C Markup Validator and W3C CSS Validator Services were used to validate every page of <br>the project to ensure there were no syntax errors in the project. Color Contrast checker Coolors used to check the contrast and also pick the right colour palette for
-the website.
 
 + [JSHint](https://jshint.com/)
 + [W3C Markup Validator](https://validator.w3.org/#validate_by_uri+with_options)
@@ -106,10 +106,11 @@ the website.
 ### Difficulties Encountered & Bugs
 + Known Bug: The user can add and remove from favorites on the recipe screen, while the user can see 
 the recipes favorited on the favorites tab when pressing view more and un-favorite button on that page the app crashes.
-I dont know how to fix this yet.
+I dont know how to fix this yet. - This has now been fixed 17.05.2022 by adding an if statement to check which page the user is on.
 + Known Bug: While I have added two fields for passwords when someone registers I couldnt make the validations for these 2 fields.
 so if the user adds a password and then adds different password on repeat-password field user will still be registered with the first entry.
-Also there is no message appearing yet when the username is taken. The page will be just refreshed.
+Also there is no message appearing yet when the username is taken. The page will be just refreshed. - Flash messages now display as they should be
+and verifications works.
 + Some URLs for images dont show as it should be. The plan in the future is to let the users add images, subject to review by admins.
 + I found it difficult creating some of the def in python and then make them work on each page. It was difficult to add blocks of code using flask.
 I believe this will come with practice.
