@@ -7,7 +7,7 @@
             <h1 class="display-4 fw-bolder">The Recipe Book of Happiness</h1>
             {% block subindex %}
             {% if session.get("user") %}
-            <p class="lead fw-normal text-white-50 mb-0">{{ session["user"] }}, you are looking at {{ recipe.recipe_name }} recipe</p>
+            <p class="lead fw-normal text-white-50 mb-0">{{ session["user"].capitalize() }}, you are looking at {{ recipe.recipe_name }} recipe</p>
             {% else %}
             <p class="lead fw-normal text-white-50 mb-0"> {{ recipe.recipe_name }}</p>
             {% endif %}

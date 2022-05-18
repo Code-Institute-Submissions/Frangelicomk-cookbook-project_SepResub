@@ -16,43 +16,46 @@
     </div>
 </header>
 <section class="py-5">
-    {% if recipes %}        
+    <div class="container">
+
+        {% if recipes %}        
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-        {%for i in recipes%}
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="{{ i.cover }}" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">{{ i.recipe_name }}</h5>
-                            <p class="fw-bolder">{{ i.description }}</p>
+            {%for i in recipes%}
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" src="{{ i.cover }}" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">{{ i.recipe_name }}</h5>
+                                <p class="fw-bolder">{{ i.description }}</p>
+                            </div>
                         </div>
-                    </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            {% if session.get("user") %}
-                            {% if i.isFavorite == False %}
-                            <div class="text-center"><a class="btn" href="favorite_recipe/{{ i.recipe_name }}"><i
-                                        class="fa-regular fa-heart"></i></a></div>
-                            {% else %}
-                            <div class="text-center"><a class="btn" href="favorite_recipe/{{ i.recipe_name }}"><i
-                                        class="fa-solid fa-heart"></i></a></div>
-                            {% endif %}
-                            {% endif %}
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                    href="recipe/{{ i.recipe_name }}">View More</a></div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                {% if session.get("user") %}
+                                {% if i.isFavorite == False %}
+                                <div class="text-center"><a class="btn" href="favorite_recipe/{{ i.recipe_name }}"><i
+                                            class="fa-regular fa-heart"></i></a></div>
+                                {% else %}
+                                <div class="text-center"><a class="btn" href="/favorite_recipe/{{ i.recipe_name }}"><i
+                                            class="fa-solid fa-heart"></i></a></div>
+                                {% endif %}
+                                {% endif %}
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                        href="/recipe/{{ i.recipe_name }}">View More</a></div>
+                            </div>
                         </div>
+                        <span><em>Created by: {{ i.created_by }}</em></span>
                     </div>
-                    <span><em>Created by: {{ i.created_by }}</em></span>
-                </div>
-        {%endfor%}
-        {% else %}  
-        <div>
-            <h3 class="text-center">No Recipes Added to Favorites Yet</h3>
-        </div>
-        {% endif %}
+            {%endfor%}
+            {% else %}  
+            <div>
+                <h3 class="text-center">No Recipes Added to Favorites Yet</h3>
+            </div>
+            {% endif %}
+    </div>
 </section>
 {% endblock %}

@@ -37,7 +37,8 @@ def register():
             if existing_user:
                 flash("Username already exists")
                 return redirect(url_for("register"))
-            if  request.form.get("password_validation") != request.form.get("password"):
+
+            if request.form.get("password_validation") != request.form.get("password"):
                 flash("Passwords don't match")
                 return redirect(url_for("register"))
             register_user = {
@@ -138,29 +139,6 @@ def recipe(recipe_name):
     return render_template("recipe.html", recipe=recipe_info)
 
 
-@app.route("/favorite_recipe/<recipe_name>")
-def favorite_recipe(recipe_name):
-    """
-    Formats index.html, take recipes from database and
-    puts them on index.html
-
-    """
-    favorite_recipes = []
-    check_if_editable = mongo.db.user_favorites.find(
-        {"recipe_name": recipe_name, "username": session["user"]})
-    for fav_rec in check_if_editable:
-        favorite_recipes.append(fav_rec)
-    # if already favorited
-    if len(favorite_recipes) >= 1:
-        mongo.db.user_favorites.delete_one(
-            {"recipe_name": recipe_name, "username": session["user"]})
-    else:
-        mongo.db.user_favorites.insert_one({
-            "recipe_name": recipe_name,
-            "username": session["user"]})
-    return redirect(url_for("index"))
-
-
 @app.route("/favorites/<username>", methods=["GET", "POST"])
 def favorites(username):
     """
@@ -184,6 +162,32 @@ def favorites(username):
             "favorites.html", username=username, recipes=recipes_modified)
     return render_template(
         "login.html")
+
+
+@app.route("/favorite_recipe/<recipe_name>")
+def favorite_recipe(recipe_name):
+    """
+    Formats index.html, take recipes from database and
+    puts them on index.html
+
+    """
+    favorite_recipes = []
+    check_if_editable = mongo.db.user_favorites.find(
+        {"recipe_name": recipe_name, "username": session["user"]})
+    for fav_rec in check_if_editable:
+        favorite_recipes.append(fav_rec)
+    # if already favorited
+    if len(favorite_recipes) >= 1:
+        mongo.db.user_favorites.delete_one(
+            {"recipe_name": recipe_name, "username": session["user"]})
+    else:
+        mongo.db.user_favorites.insert_one({
+            "recipe_name": recipe_name,
+            "username": session["user"]})
+
+    if "favorites" in request.referrer:
+        return redirect("/favorites/"+session["user"])
+    return redirect(url_for("index"))
 
 
 @app.route('/add_recipe', methods=('GET', 'POST'))

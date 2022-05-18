@@ -45,15 +45,15 @@
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             {% if session.get("user") %}
                             {% if i.isFavorite == False %}
-                            <div class="text-center"><a class="btn" href="favorite_recipe/{{ i.recipe_name }}"><i
+                            <div class="text-center"><a class="btn" href="/favorite_recipe/{{ i.recipe_name }}"><i
                                         class="fa-regular fa-heart"></i></a></div>
                             {% else %}
-                            <div class="text-center"><a class="btn" href="favorite_recipe/{{ i.recipe_name }}"><i
+                            <div class="text-center"><a class="btn" href="/favorite_recipe/{{ i.recipe_name }}"><i
                                         class="fa-solid fa-heart"></i></a></div>
                             {% endif %}
                             {% endif %}
                             <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                    href="recipe/{{ i.recipe_name }}">View More</a></div>
+                                    href="/recipe/{{ i.recipe_name }}">View More</a></div>
                         </div>
                     </div>
                     <span><em>Created by: {{ i.created_by }}</em></span>
