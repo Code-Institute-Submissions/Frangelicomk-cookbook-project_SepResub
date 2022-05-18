@@ -5,3 +5,16 @@
 */
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
+$(function(){
+    var current = location.pathname;
+    $('nav li a').each(function(){
+        var $this = $(this);
+        // if the current path is like this link, make it active
+        if($this.attr('href') == "/" && current == "/"){
+            $this.addClass('active');
+        }
+        if($this.attr('href').indexOf(current) !== -1 && current != "/"){
+            $this.addClass('active');
+        }
+    })
+})
