@@ -6,3 +6,7 @@ body{
 footer{
     margin-top: auto;
 }
+
+.search{
+    width: calc(100% - 42px)!important;
+}
