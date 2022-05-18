@@ -196,7 +196,6 @@ SECRET_KEY :
   + [Gary Simon](https://dribbble.com/Coursetro) has been a great inspiration and you can follow his discord channel [here!](https://discord.gg/wQQtgNey)
 + [Mozila Developer](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) for the awesome explaination of the canvas future. Everything you need for Javascript can be found 
   there as well.
-+ [George Karabassis](https://www.fiverr.com/gorgeka111) a big thanks to the most amazing Tutor/Mentor out there for the Bootcamp he provided for 3 days in a row to help me further understand
-  Javascript
++ [George Karabassis](https://www.fiverr.com/gorgeka111) a big thanks to the most amazing Tutor/Mentor out there.
 + Also I have to thank [Nescafe](https://www.nescafe.com/gb/) which is my go to go Coffee helping me maintain my eyes open while coding late in the evening.This doesnt count as
 an ad right? And if i continue like this I will Acknowledge Specsavers as they will soon provide me with glasses :)
