@@ -27,26 +27,18 @@
             <li class="nav-item"><a class="nav-link" href="{{ url_for('index')}}">Recipes</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('about')}}">About</a></li>
             {% block add_recipe %}
-                {% if session.get("user") %}
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('add_recipe')}}">Add Recipe</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('favorites', username=session['user']) }}">Favorites</a></li>
-                {% endif %}
+            {% block authentication %}
+            {% if session.get("user") %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('add_recipe')}}">Add Recipe</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('favorites', username=session['user']) }}">Favorites</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('logout')}}">Logout</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('login')}}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('register')}}">Register</a></li>
+            {% endif %}
+            {% endblock authentication %}
             {% endblock add_recipe %}
             </ul>
-            <form class="d-flex">
-            {% block authentication %}
-                {% if session.get("user") %}
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 m-auto">
-                        <li class="nav-item"><a class="nav-link" href="{{ url_for('logout')}}">Logout</a></li>
-                    </ul>
-                {% else %}
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 m-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('login')}}">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('register')}}">Register</a></li>
-                </ul>
-                {% endif %}
-            {% endblock authentication %}
-        </form>
         </div>
     </div>
 </nav>
