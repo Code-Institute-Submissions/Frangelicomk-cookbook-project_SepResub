@@ -3,33 +3,39 @@
 <!-- Header-->
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">The Recipe Book of Happiness</h1>
-                    {% block subindex %}
-                    {% if session.get("user") %}
-                    <p class="lead fw-normal text-white-50 mb-0">{{ session["user"].capitalize() }}, here you can view all the recipes</p>
-                    {% else %}
-                    <p class="lead fw-normal text-white-50 mb-0">Search Recipes Bellow</p>
-                    {% endif %}
-                    {% endblock subindex %}
-                </div>
-            </header>
-    <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">    
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">The Recipe Book of Happiness</h1>
+            {% block subindex %}
+            {% if session.get("user") %}
+            <p class="lead fw-normal text-white-50 mb-0">{{ session["user"].capitalize() }}, here you can view all the recipes</p>
+            {% else %}
+            <p class="lead fw-normal text-white-50 mb-0">Search Recipes Bellow</p>
+            {% endif %}
+            {% endblock subindex %}
+        </div>
+    </div>
+</header>
+<section class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
             <form method="POST" action="{{ url_for('search_result')}}">
                 <div class="input-group justify-content-center py-3">
-                        <div class="form-outline search" >
-                        <input type="text" id="query" class="form-control" name="query" placeholder="Search by Recipe,or Cuisine" required/>
-                        </div>
-                        <button id="search-button" type="submit" class="btn btn-primary">
-                        <i class="fas fa-search"></i>
-                        </button>
+                    <div class="form-outline search" >
+                    <input type="text" id="query" class="form-control" name="query" placeholder="Search by Recipe,or Cuisine" required/>
                     </div>
+                    <button id="search-button" type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                    </button>
+                </div>
             </form>
-        {% if recipes %}        
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        </div>  
+    </div>
+</section>
+<section class="container-fluid">
+    {% if recipes %}        
+        <div class="row justify-content-center">
         {%for i in recipes%}
-            <div class="col mb-5">
+            <div class="col-12 col-lg-2 col-md-4 mb-4">
                 <div class="card h-100">
                     <!-- Product image-->
                     <img class="card-img-top" src="{{ i.cover }}" alt="..." />
@@ -41,28 +47,29 @@
                             <p class="fw-bolder">{{ i.description }}</p>
                         </div>
                     </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            {% if session.get("user") %}
-                            {% if i.isFavorite == False %}
-                            <div class="text-center"><a class="btn" href="/favorite_recipe/{{ i.recipe_name }}"><i
-                                        class="fa-regular fa-heart"></i></a></div>
-                            {% else %}
-                            <div class="text-center"><a class="btn" href="/favorite_recipe/{{ i.recipe_name }}"><i
-                                        class="fa-solid fa-heart"></i></a></div>
-                            {% endif %}
-                            {% endif %}
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                    href="/recipe/{{ i.recipe_name }}">View More</a></div>
-                        </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        {% if session.get("user") %}
+                        {% if i.isFavorite == False %}
+                        <div class="text-center"><a class="btn" href="/favorite_recipe/{{ i.recipe_name }}"><i
+                                    class="fa-regular fa-heart"></i></a></div>
+                        {% else %}
+                        <div class="text-center"><a class="btn" href="/favorite_recipe/{{ i.recipe_name }}"><i
+                                    class="fa-solid fa-heart"></i></a></div>
+                        {% endif %}
+                        {% endif %}
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                href="/recipe/{{ i.recipe_name }}">View More</a></div>
                     </div>
-                    <span><em>Created by: {{ i.created_by }}</em></span>
                 </div>
+                <span><em>Created by: {{ i.created_by }}</em></span>
+            </div>
         {%endfor%}
+        </div>
         {% else %}  
         <div>
             <h3>NO RESULTS</h3>
         </div>
-        {% endif %}
+    {% endif %}
 </section>
 {% endblock %}
