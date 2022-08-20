@@ -102,6 +102,7 @@ write down what will the upcoming futures be
 + The website was viewed on a variety of devices such as Desktop, Laptop, Samsung S22 Ultra and iPhoneX.
 + I personally have access in 27" 2K Monitor, a 17" Laptop, Android phone which I constatly used for testing.
 + I have used Chrome Developer Tools as Opera Dev Tools to constantly check the website responsivness.
++ Fixed issue with responsiveness on small devices and added better user experience on recipes on index.html and favorites.html
 
 ### Difficulties Encountered & Bugs
 + Known Bug: The user can add and remove from favorites on the recipe screen, while the user can see 
@@ -166,7 +167,7 @@ $ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY
 ### Heroku
 
 The project was deployed to Heroku following the next steps:
-1. Create a requirements.txt file using the terminal command `pip freeze > requirements.txt`.
+1. Create a requirements.txt file using the terminal command `pip3 freeze > requirements.txt`.
 2. Create a Procfile with the terminal command `echo web: python app.py > Procfile`.
 3. Proceed with git add and git commit the new requirements and Procfile and then git push the project to GitHub.
 4. Create a new app on [Heroku website](https://dashboard.heroku.com/) by clicking the "New" button on your dashboard. Give it a name and set the region to Europe.
