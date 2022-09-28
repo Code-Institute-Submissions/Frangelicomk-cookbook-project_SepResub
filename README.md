@@ -94,7 +94,21 @@ write down what will the upcoming futures be
 
 
 ### Testing User Stories
-+ I did not have the time for testing user stories. I run my own tests for this project :/
+
+    + First Time Visitors
+
+      - For first time Visitors my aim is have the recipes shown in the main screen, and the about tab to be visible.
+      Also for the Login/Register Buttons to be available. This is now achieved and when a first time visitor comes to the site can see
+      all the recipes. The login/Register buttons are visible and in differnt color to attract the eye.
+      - First time visitor are able to understand the content off the site from the first page.
+      - First time visitor can not see the favorite tab unless the register.
+    
+    
+
+    + Returing Visitors
+
+      - Returning visitors should be able to quickly log in and taken straight to their favorite page and also to be able to add their own recipes.
+      In the future I want to user to be able to re-edit their own recipes and update them as required.
   
 
 ### Further Testing
