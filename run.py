@@ -39,7 +39,8 @@ def register():
                 flash("Username already exists")
                 return redirect(url_for("register"))
 
-            if request.form.get("password_validation") != request.form.get("password"):
+            if request.form.get("password_validation") != request.form.get(
+                                                            "password"):
                 flash("Passwords don't match")
                 return redirect(url_for("register"))
             register_user = {

@@ -5,6 +5,7 @@
 This is my 3rd Project for Code Institute, which futures python. Unfortunately I did not have the time to complete the website as I wanted I will
 write down what will the upcoming futures be
 
+<h2 align="center"><img src="static\assets\ms3_validation_tests\Untitled.png" alt="screenshot taken from AmIresponsivesite showing the webpages responsiveness on a Laptop , Desktop and Mobile"></h2>
 
 ## Table of contents
 1. [User Experience (UX)](#user-experience-ux)
@@ -90,33 +91,45 @@ write down what will the upcoming futures be
 + [JSHint](https://jshint.com/)
 + [W3C Markup Validator](https://validator.w3.org/#validate_by_uri+with_options)
 + [W3C CSS Validator](https://jigsaw.w3.org/css-validator/#validate_by_input)
-+ [PEP8](http://pep8online.com/)
++ [PEP8](http://pep8online.com/) - This website has now expired as ( 29.09.2022 ) I have used Pylint
 
 
 ### Testing User Stories
 
     + First Time Visitors
-
-      - For first time Visitors my aim is have the recipes shown in the main screen, and the about tab to be visible.
-      Also for the Login/Register Buttons to be available. This is now achieved and when a first time visitor comes to the site can see
-      all the recipes. The login/Register buttons are visible and in differnt color to attract the eye.
-      - First time visitor are able to understand the content off the site from the first page.
-      - First time visitor can not see the favorite tab unless the register.
+      
+    For first time Visitors my aim is have the recipes shown in the main screen, and the about tab to be visible.
+    Also for the Login/Register Buttons to be available. This is now achieved and when a first time visitor comes to the site can see
+    all the recipes. The login/Register buttons are visible and in differnt color to attract the eye.
     
+    First time visitor are able to understand the content off the site from the first page.
     
-
+    First time visitor can not see the favorite tab unless the register.
+    
     + Returing Visitors
+      
+    Returning visitors should be able to quickly log in and taken straight to their favorite page and also to be able to add their own recipes.
+    This was achieved, the re-turning visitors once they have logged in they get re-directed on their favourites page.
 
-      - Returning visitors should be able to quickly log in and taken straight to their favorite page and also to be able to add their own recipes.
-      In the future I want to user to be able to re-edit their own recipes and update them as required.
+    Returning visitors can navigate quickly on the main page and view all recipes.
+    
+    + Frequent Visitors (chefs, cooks etc)
+
+    1. Frequent visitors might find usefull to read the about page. 
+
+       - About page can be seen. In the future this will be like a blog page, which I want to encourage futured Chefs to showcase their work and recipes encouraging
+       visitors to try cooking at home.
   
 
 ### Further Testing
 + The Website was tested on Google Chrome, Internet Explorer, Microsoft Edge, Opera and Safari browsers.
 + The website was viewed on a variety of devices such as Desktop, Laptop, Samsung S22 Ultra and iPhoneX.
++ A large amount of testing was done to ensure that all pages were linking correctly. 
 + I personally have access in 27" 2K Monitor, a 17" Laptop, Android phone which I constatly used for testing.
 + I have used Chrome Developer Tools as Opera Dev Tools to constantly check the website responsivness.
 + Fixed issue with responsiveness on small devices and added better user experience on recipes on index.html and favorites.html
++ As I dont want more images on the markdown please find the testing screenshots on the ms3_validation_tests folder. This can be achieved if you navigate on my github page then go to COOKBOOK-PROJECT repository there you will find a folder named static then navigate to assets folder which you can see a subfolder ms3_validation_tests folder. If you right click on that folder you will see the images I have uploaded.
+Alternatively you can click [here](https://github.com/Frangelicomk/cookbook-project/tree/main/static/assets/ms3_validation_tests) to see the folder on my github straight away.
 
 ### Difficulties Encountered & Bugs
 + Known Bug: The user can add and remove from favorites on the recipe screen, while the user can see 
