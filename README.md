@@ -129,6 +129,10 @@ write down what will the upcoming futures be
 + Fixed issue with responsiveness on small devices and added better user experience on recipes on index.html and favorites.html
 + As I dont want more images on the markdown please find the testing screenshots on the ms3_validation_tests folder. This can be achieved if you navigate on my github page then go to COOKBOOK-PROJECT repository there you will find a folder named static then navigate to assets folder which you can see a subfolder ms3_validation_tests folder. If you right click on that folder you will see the images I have uploaded.
 Alternatively you can click [here](https://github.com/Frangelicomk/cookbook-project/tree/main/static/assets/ms3_validation_tests) to see the folder on my github straight away.
++ While testing HTML the only errors and issues were that WC3 validator did not recognise Python.
++ I havent used much Java Script so the testing was easy with JSHINT which passed the tests.
++ While Used LightHouse to test the readability of the site the issue was on Accessibility Due to the loading time of images which will be sorted in the futures using AWS S3 Bucket. Also the button names which are mentioned
+that the names are not valid, Python is being used. Also while I used contrast checker I liked the grayed subtitles under the H1 and H2 which is not best practice due to contrast but thats my personal preference.
 
 ### Difficulties Encountered & Bugs
 + Known Bug: The user can add and remove from favorites on the recipe screen, while the user can see 
