@@ -95,30 +95,29 @@ write down what will the upcoming futures be
 
 
 ### Testing User Stories
++ First Time Visitors
+  
+  For first time Visitors my aim is have the recipes shown in the main screen, and the about tab to be visible.
+  Also for the Login/Register Buttons to be available. This is now achieved and when a first time visitor comes to the site can see
+  all the recipes. The login/Register buttons are visible and in differnt color to attract the eye.
 
-    + First Time Visitors
-      
-    For first time Visitors my aim is have the recipes shown in the main screen, and the about tab to be visible.
-    Also for the Login/Register Buttons to be available. This is now achieved and when a first time visitor comes to the site can see
-    all the recipes. The login/Register buttons are visible and in differnt color to attract the eye.
-    
-    First time visitor are able to understand the content off the site from the first page.
-    
-    First time visitor can not see the favorite tab unless the register.
-    
-    + Returing Visitors
-      
-    Returning visitors should be able to quickly log in and taken straight to their favorite page and also to be able to add their own recipes.
-    This was achieved, the re-turning visitors once they have logged in they get re-directed on their favourites page.
+  First time visitor are able to understand the content off the site from the first page.
 
-    Returning visitors can navigate quickly on the main page and view all recipes.
-    
-    + Frequent Visitors (chefs, cooks etc)
+  First time visitor can not see the favorite tab unless the register.
 
-    1. Frequent visitors might find usefull to read the about page. 
++ Returing Visitors
+  
+  Returning visitors should be able to quickly log in and taken straight to their favorite page and also to be able to add their own recipes.
+  This was achieved, the re-turning visitors once they have logged in they get re-directed on their favourites page.
 
-       - About page can be seen. In the future this will be like a blog page, which I want to encourage futured Chefs to showcase their work and recipes encouraging
-       visitors to try cooking at home.
+  Returning visitors can navigate quickly on the main page and view all recipes.
+
++ Frequent Visitors (chefs, cooks etc)
+
+  Frequent visitors might find usefull to read the about page. 
+
+  About page can be seen. In the future this will be like a blog page, which I want to encourage futured Chefs to showcase their work and recipes encouraging
+  visitors to try cooking at home.
   
 
 ### Further Testing
